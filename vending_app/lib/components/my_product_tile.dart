@@ -49,6 +49,13 @@ class _MyProductTileState extends State<MyProductTile> {
       }
     }
 
+    void removeFromCart() {
+      setState(() {
+        _isSelected = false;
+      });
+      context.read<Shop>().removeFromCart(widget.product);
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -67,14 +74,16 @@ class _MyProductTileState extends State<MyProductTile> {
               AspectRatio(
                 aspectRatio: 1,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  width: double.infinity,
-                  child: const Icon(Icons.favorite),
-                ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    width: double.infinity,
+                    child: Image.asset(
+                      widget.product.imagePath,
+                      fit: BoxFit.contain,
+                    )),
               ),
               const SizedBox(height: 25),
               Text(
@@ -104,7 +113,8 @@ class _MyProductTileState extends State<MyProductTile> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: IconButton(
-                  onPressed: isCartEmpty ? () => addToCart() : null,
+                  onPressed:
+                      _isSelected ? () => removeFromCart() : () => addToCart(),
                   icon: const Icon(Icons.add),
                 ),
               ),
