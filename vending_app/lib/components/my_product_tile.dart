@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vending_app/models/product.dart';
 import 'package:vending_app/models/shop.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class MyProductTile extends StatefulWidget {
   final Product product;
@@ -107,15 +108,22 @@ class _MyProductTileState extends State<MyProductTile> {
               Text('\$${widget.product.price.toStringAsFixed(2)}'),
               Container(
                 decoration: BoxDecoration(
-                  color: _isSelected
-                      ? Colors.grey
-                      : Theme.of(context).colorScheme.secondary,
+                  color: Colors.grey,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: IconButton(
-                  onPressed:
-                      _isSelected ? () => removeFromCart() : () => addToCart(),
-                  icon: const Icon(Icons.add),
+                child: MaterialButton(
+                  onPressed: () async {
+                    var url =
+                        Uri.http('192.168.4.1', widget.product.buttonLink);
+                    var response = await http.get(url);
+                    print(response.body);
+                  },
+                  child: Text(
+                    'Buy',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ),
             ],

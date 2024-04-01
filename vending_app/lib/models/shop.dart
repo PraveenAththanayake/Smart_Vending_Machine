@@ -7,12 +7,14 @@ class Shop extends ChangeNotifier {
         name: "Product 1",
         price: 99.99,
         description: "item description",
-        imagePath: "assets/1.png"),
+        imagePath: "assets/1.png",
+        buttonLink: "on-1"),
     Product(
-        name: "Product 1",
+        name: "Product 2",
         price: 99.99,
         description: "item description",
-        imagePath: "assets/2.png"),
+        imagePath: "assets/2.png",
+        buttonLink: "on-2"),
   ];
 
   List<Product> _cart = [];
